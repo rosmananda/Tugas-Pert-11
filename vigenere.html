@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vernam Cipher</title>
+    <style>
+        body {
+            background: #ee8c36;
+        }
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgb(247, 247, 247);
+            height: 650px;
+            width: 670px;
+            border-radius: 10px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #input-container input {
+            margin-bottom: 20px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        #result {
+            position: absolute;
+            top: 90%;
+            transition: 0.3s;
+            height: 30px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0);
+            inset: 0 0 10px rgba(0, 0, 0, 2);
+            color: white;
+            background: #bbff56;
+            border-radius: 5px;
+            text-align: center;
+    
+        }
+        #button {
+            background: #9740fa;
+            height: 40px;
+            border-radius: 7px;
+            border: #d0be90 solid 1.5px;
+            cursor: pointer;
+            font: normal 1.4em/1.8em Arial, Helvetica, sans-serif;
+            color: white;
+            transition: 0.3s;
+        }
+        #button:hover #icon {
+            transform: translateX(10px);
+        }
+        #icon {
+            position: relative;
+            left: 20px;
+            transition: 0.3s;
+        }
+        h1 {
+            font-family: sans-serif;
+        }
+        #image {
+            border-radius: 50%;
+            position: absolute;
+            top: 7%;
+            left: 39%;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://kit.fontawesome.com/7d5b8cf8a9.js" crossorigin="anonymous"></script>
+    <div id='container'>
+        <div id='input-container'>
+            <h1>Vernam Cipher</h1>
+            <img src='vigenerechipper.jpeg' id='image' width='160'>
+            <input type='text' id='plain-input' placeholder='Plaintext'>
+            <input type='text' id='key-input' placeholder='Key'>
+            <button id='button'>Encrypt<i class='fas fa-arrow-alt-circle-right' id='icon'></i></button>
+        </div>
+        <input id='result' disabled value='Results will appear here...'>
+    </div>
+
+    <script>
+        let button = document.getElementById('button')
+        let plain_input = document.getElementById('plain-input')
+        let key_input = document.getElementById('key-input')
+        let display = document.getElementById('result')
+
+        function encrypt(key, plain) {
+            let upperCase_key = key.toUpperCase()
+            let arr_key = upperCase_key.split('')
+            let new_arr_key = []
+            let result = ''
+            let upperCase_plain = plain.toUpperCase()
+            let arr_plain = upperCase_plain.split('')
+
+            if (plain == "" && key == "") {
+                alert("You didn't input anything...")
+            }
+
+            for (var i = 0; i < arr_plain.length; i++) {
+                new_arr_key.push(arr_key[i % arr_key.length])
+                if (arr_plain[i].charCodeAt() !== 32) {
+                    result += String.fromCharCode((arr_key[i].charCodeAt() + arr_plain[i].charCodeAt()) % 26 + 65)
+                } else {
+                    result += ' '
+                }
+            }
+
+            display.value = result
+        }
+
+        button.onclick = () => {
+            encrypt(key_input.value, plain_input.value)
+        }
+    </script>
+</body>
+</html>
